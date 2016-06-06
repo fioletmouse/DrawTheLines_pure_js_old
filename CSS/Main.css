@@ -20,14 +20,3 @@
     z-index: 2;
     background-color:gray; 
 }
-
-   .colorwell {
-     border: 2px solid #fff;
-     width: 6em;
-     text-align: center;
-     cursor: pointer;
-   }
-   body .colorwell-selected {
-     border: 2px solid #000;
-     font-weight: bold;
-   }

@@ -6,29 +6,37 @@
     <title>Funny Bunny</title>
     <link type="text/css" href="CSS/Main.css" rel="stylesheet" />
     <link type="text/css" href="CSS/farbtastic.css" rel="stylesheet" />
-    <link type="text/css" href="CSS/bs/bootstrap.css" rel="stylesheet">
+    <link type="text/css" href="CSS/bs/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    <div id="MainContainer">
-        <div  id="Settings"> 
-            <div id="colorPanel">
-                <div id="colorpicker"></div>
-                <input type="text" name="color" id="color" value="#123456" />
-            </div>
+    <div id="tmp" style="display: none; width:200px;">
+        длина луча
+        <input id="length" data-bind="value: lineUserLength" />
+        количество точек на луч
+        <input id="dotsCount" data-bind="value: dotsCount" />
+        <p data-bind="text: lineLength"></p>
+        
+        <label for="linewidth">Толщина линий:</label><input type="text" id="linewidth" style="width:40px" data-bind="value: linewidth" />
 
-            <button id="showColorPicker" style="width: 10px; height:10px;" title="Цвета" ></button>
-        <button type="button" class="btn btn-primary" data-toggle="popover" title="Заголовок панели">Кнопка с popover</button>
-            длина луча <input id="length" value="30"/>
-            количество точек на луч <input id="dotsCount"/>
-            <p data-bind="text: lineUserLength"></p>
+        <input type="text" id="color" name="color" data-bind="value: lineColor"/>
+
+        <div id="colorCircle"></div>
+    </div>
+    <div id="MainContainer">
+        <div id="Settings">
+            <button type="button" class="btn btn-primary" data-toggle="colorPopover" title="Выберите цвет фона">Фон</button>
+            <button type="button" class="btn btn-primary" data-toggle="settingsPopover" title="Настройки элементов">Элементы</button>
+
+
         </div>
-    
+
         <canvas id="cnv"></canvas>
     </div>
 </body>
-    <script type="text/javascript" src="Scripts/libs/jquery-1.9.1.js"></script>
-    <script type="text/javascript" src="Scripts/libs/bootstrap.min.js"></script>
-    <script type="text/javascript" src="Scripts/libs/farbtastic.js"></script>
-    <script type="text/javascript" src="Scripts/Main.js"></script>
-    <script type="text/javascript" src="Scripts/Graph.js"></script>
+<script type="text/javascript" src="Scripts/libs/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="Scripts/libs/bootstrap.min.js"></script>
+<script type="text/javascript" src="Scripts/libs/knockout-2.1.0.js"></script>
+<script type="text/javascript" src="Scripts/libs/farbtastic.js"></script>
+<script type="text/javascript" src="Scripts/Main.js"></script>
+<script type="text/javascript" src="Scripts/Graph.js"></script>
 </html>
