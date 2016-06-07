@@ -3,31 +3,47 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Funny Bunny</title>
     <link type="text/css" href="CSS/Main.css" rel="stylesheet" />
     <link type="text/css" href="CSS/farbtastic.css" rel="stylesheet" />
     <link type="text/css" href="CSS/bs/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    <div id="tmp" style="display: none; width:200px;">
-        длина луча
-        <input id="length" data-bind="value: lineUserLength" />
-        количество точек на луч
-        <input id="dotsCount" data-bind="value: dotsCount" />
-        <p data-bind="text: lineLength"></p>
-        
-        <label for="linewidth">Толщина линий:</label><input type="text" id="linewidth" style="width:40px" data-bind="value: linewidth" />
-
-        <input type="text" id="color" name="color" data-bind="value: lineColor"/>
-
+    <div id="settingsPanel">
+        <div class="settingsRow">
+            <label for="length" >Длина луча:</label>
+            <input id="length" data-bind="value: lineUserLength"/>
+            <span>px</span>      
+        </div>
+        <div class="settingsRow">
+            <span>Реальная длина луча:</span>
+            <span data-bind="text: lineLength"></span>
+            <span>px</span>
+        </div>
+        <div class="settingsRow"> 
+            <label for="dotsCount" >Точек на луч:</label>
+            <input id="dotsCount" data-bind="value: dotsCount" />
+            <span>шт</span>
+        </div>
+        <div class="settingsRow"> 
+            <label for="linewidth">Толщина линий:</label>
+            <input type="text" id="linewidth"  data-bind="value: linewidth" />
+            <span>px</span>
+        </div>
+        <div class="settingsRow"> 
+            <label for="color">Цвет линий:</label>
+            <input type="text" id="color" name="color" style="width:40%" data-bind="value: lineColor"/>
+        </div>
         <div id="colorCircle"></div>
     </div>
-    <div id="MainContainer">
+
+    <div id="MainContainer" >
         <div id="Settings">
             <button type="button" class="btn btn-primary" data-toggle="colorPopover" title="Выберите цвет фона">Фон</button>
             <button type="button" class="btn btn-primary" data-toggle="settingsPopover" title="Настройки элементов">Элементы</button>
-
-
+            <button type="button" class="btn btn-primary" onclick="clearContext()">Очистить</button>
         </div>
 
         <canvas id="cnv"></canvas>
