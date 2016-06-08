@@ -26,9 +26,21 @@ function startDrawing(e) {
     Settings.y = e.pageY - canvas.offsetTop;
 
     changeLineLenghtToDots();
+
+    var red = 45 * Math.PI / 180;
+
+    context.translate(Settings.x, Settings.y); // сместили начало координат в точки клика
+    context.rotate(red);                       // повернули все, относительно точки клика
+    context.translate(-Settings.x, -Settings.y); // вернули начало координат в левый верхний угол + учет поворота, т.е. она сместилась на угол
+
     makeBaseLines(Settings.x, Settings.y, Settings.lineLength());
-   // makeJoinLines(Settings.x, Settings.y, Settings.dotsCount(), Settings.lineLength());
+    makeJoinLines(Settings.x, Settings.y, Settings.dotsCount(), Settings.lineLength());
+
+    context.translate(Settings.x, Settings.y);   // начало координат в точку клика
+    context.rotate(-red);                        // вернули полотно в горизонтальный вид  в т.ч. вернули точку отсчета в горизонталь
+    context.translate(-Settings.x, -Settings.y); // начало координат в угол
     //console.log(Settings);
+    
 }
 
 function makeJoinLines(x, y, dotsCount, lenght)
@@ -49,12 +61,15 @@ function makeJoinLines(x, y, dotsCount, lenght)
 function makeBaseLines(x, y, length) {
 
     DrawLines(x, y, x + length, y);
-   // DrawLines(x, y, x - length, y);
-   // DrawLines(x, y, x, y + length);
-   // DrawLines(x, y, x, y - length);
+    DrawLines(x, y, x - length, y);
+    DrawLines(x, y, x, y + length);
+    DrawLines(x, y, x, y - length);
 }
 
 function DrawLines(fromX, fromY, toX, toY) {
+
+  
+
     context.beginPath();
     context.lineWidth = parseInt(Settings.linewidth());
     context.strokeStyle = Settings.lineColor();
@@ -62,27 +77,24 @@ function DrawLines(fromX, fromY, toX, toY) {
     context.lineTo(toX, toY);
     context.stroke();
     context.closePath();
-    //var red = 90 * Math.PI / 180;
-    //context.translate(fromX, fromY);
-    //context.rotate(red);
 
-    var canvasWidth = canvas.width;
+  /*  var canvasWidth = canvas.width;
     var canvasHeight = canvas.height;
         // Clear the canvas
         context.clearRect(0, 0, canvasWidth, canvasHeight);
 
         // Move registration point to the center of the canvas
-        //context.translate(canvasWidth / 2, canvasWidth / 2);
+        context.translate(canvasWidth / 2, canvasWidth / 2);
 
         // Rotate 1 degree
-        //context.rotate(Math.PI / 180);
+        context.rotate(Math.PI / 180);
 
         // Move registration point back to the top left corner of canvas
-        //context.translate(-canvasWidth / 2, -canvasWidth / 2);
+        context.translate(-canvasWidth / 2, -canvasWidth / 2);
 
         context.fillStyle = "red";
         context.fillRect(canvasWidth / 4, canvasWidth / 4, canvasWidth / 2, canvasHeight / 4);
         context.fillStyle = "blue";
         context.fillRect(canvasWidth / 4, canvasWidth / 2, canvasWidth / 2, canvasHeight / 4);
-
+*/
 }
