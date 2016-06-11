@@ -6,7 +6,8 @@
     linewidth: ko.observable(1),
     lineColor: ko.observable("#000000"),
     dotsCount: ko.observable(10),
-    step: 5
+    step: 5,
+    rotationAngle: ko.observable(0)
 }
 ko.applyBindings(Settings);
 
@@ -21,26 +22,31 @@ function changeLineLenghtToDots()
     Settings.lineLength(realLenght);
 }
 
+function inRad(angle)
+{
+    return angle * Math.PI / 180;
+}
+function Rotation(angle)
+{
+    context.translate(Settings.x, Settings.y); // сместили начало координат в точки клика
+    context.rotate(angle);                       // повернули все, относительно точки клика
+    context.translate(-Settings.x, -Settings.y); // вернули начало координат в левый верхний угол + учет поворота, т.е. она сместилась на угол
+}
+
 function startDrawing(e) {
     Settings.x = e.pageX - canvas.offsetLeft;
     Settings.y = e.pageY - canvas.offsetTop;
 
     changeLineLenghtToDots();
 
-    var red = 45 * Math.PI / 180;
 
-    context.translate(Settings.x, Settings.y); // сместили начало координат в точки клика
-    context.rotate(red);                       // повернули все, относительно точки клика
-    context.translate(-Settings.x, -Settings.y); // вернули начало координат в левый верхний угол + учет поворота, т.е. она сместилась на угол
+    Rotation(inRad(Settings.rotationAngle()));
 
     makeBaseLines(Settings.x, Settings.y, Settings.lineLength());
     makeJoinLines(Settings.x, Settings.y, Settings.dotsCount(), Settings.lineLength());
 
-    context.translate(Settings.x, Settings.y);   // начало координат в точку клика
-    context.rotate(-red);                        // вернули полотно в горизонтальный вид  в т.ч. вернули точку отсчета в горизонталь
-    context.translate(-Settings.x, -Settings.y); // начало координат в угол
-    //console.log(Settings);
-    
+    Rotation(-inRad(Settings.rotationAngle()));
+    //console.log(Settings);  
 }
 
 function makeJoinLines(x, y, dotsCount, lenght)
