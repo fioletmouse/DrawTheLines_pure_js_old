@@ -11,7 +11,31 @@ window.onload = function () {
 
     // Подключаем требуемые для рисования события
     canvas.onclick = startDrawing;
+    canvas.oncontextmenu = startDrawingCir;
 }
+var ElementSettings = {
+    lineUserLength: ko.observable(100),  // введено пользователем
+    lineLength: ko.observable(0),      // применяется
+    linewidth: ko.observable(1),
+    lineColor: ko.observable("#000000"),
+    dotsCount: ko.observable(10),
+    step: 5,
+    rotationAngle: ko.observable(0)
+}
+var Settings = {
+    x: 0,
+    y: 0,
+    lineUserLength: ko.observable(100),  // введено пользователем
+    lineLength: ko.observable(0),      // применяется
+    linewidth: ko.observable(1),
+    lineColor: ko.observable("#000000"),
+    dotsCount: ko.observable(10),
+    step: 5,
+    rotationAngle: ko.observable(0)
+}
+ko.applyBindings(Settings);
+
+
 $(document).ready(function () {
     // Цвет фона
     $('[data-toggle="colorPopover"]').popover({
@@ -42,6 +66,16 @@ $(document).ready(function () {
     $('#colorCircle').farbtastic(function (color) {
         $("#color").val(color).css("background-color", color);
         $("#color").change();
+    });
+
+    $('[data-toggle="circlePopover"]').popover({
+        //Установление направления отображения popover
+        placement: 'bottom',
+        html: true,
+        trigger: "click",
+        content: $("#settingsPanel")
+    }).on("click", function () {
+        $("#settingsPanel").show();
     });
 });
 
