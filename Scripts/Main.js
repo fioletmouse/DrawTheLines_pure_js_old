@@ -1,5 +1,19 @@
 ﻿var canvas;
 var context;
+var star;
+var circle;
+
+var Settings = {
+    x: 0,
+    y: 0/*,
+    lineUserLength: ko.observable(100),  // введено пользователем
+    lineLength: ko.observable(0),      // применяется
+    linewidth: ko.observable(1),
+    lineColor: ko.observable("#000000"),
+    dotsCount: ko.observable(10),
+    step: 5,
+    rotationAngle: ko.observable(0)*/
+}
 
 window.onload = function () {
     canvas = document.getElementById("cnv");
@@ -10,33 +24,30 @@ window.onload = function () {
     redraw();
 
     // Подключаем требуемые для рисования события
-    canvas.onclick = startDrawing;
+    //canvas.onclick = startDrawing;
     canvas.oncontextmenu = startDrawingCir;
 }
-var ElementSettings = {
-    lineUserLength: ko.observable(100),  // введено пользователем
-    lineLength: ko.observable(0),      // применяется
-    linewidth: ko.observable(1),
-    lineColor: ko.observable("#000000"),
-    dotsCount: ko.observable(10),
-    step: 5,
-    rotationAngle: ko.observable(0)
-}
-var Settings = {
-    x: 0,
-    y: 0,
-    lineUserLength: ko.observable(100),  // введено пользователем
-    lineLength: ko.observable(0),      // применяется
-    linewidth: ko.observable(1),
-    lineColor: ko.observable("#000000"),
-    dotsCount: ko.observable(10),
-    step: 5,
-    rotationAngle: ko.observable(0)
-}
-ko.applyBindings(Settings);
 
+function GetEvent(item)
+{
+    canvas.onclick = item.startDrawing.bind(item);
+}
 
 $(document).ready(function () {
+
+
+    star = new Stars();
+    star.AddButton("#Settings");
+    star.MakePopover();
+    Settings.star = star.ElementSettings;
+
+    circle = new Circle();
+    circle.AddButton("#Settings");
+    circle.MakePopover();
+    Settings.circle = circle.ElementSettings;
+
+    ko.applyBindings(Settings);
+
     // Цвет фона
     $('[data-toggle="colorPopover"]').popover({
             title: "Colorpicker <i class='icon-remove pull-right'></i>",
@@ -102,8 +113,8 @@ Animal.prototype.run = function (speed) {
     this.speed += speed;
     alert(this.name + ' бежит, скорость ' + this.speed);
 };
-
-function Rabbit(name) {
+*/
+/*function Rabbit(name) {
     this.name = name;
     this.speed = 0;
 }
@@ -120,12 +131,8 @@ Rabbit.prototype.stop = function () {
     alert(this.name + ' прыгает');
 };
 
-// Give the init function the jQuery prototype for later instantiation
-//Animal.__proto__ = Object.create(Animal.fn);
-
 var animal = new Animal('Зверь');
 var animal1 = new Rabbit('Rabbit');
 alert(animal.speed); // 0, свойство взято из прототипа
 animal.run(5); // Зверь бежит, скорость 5
-animal.run(5); // Зверь бежит, скорость 10
-animal.stop(); // Зверь стоит*/
+*/

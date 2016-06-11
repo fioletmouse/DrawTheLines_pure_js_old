@@ -1,4 +1,94 @@
-﻿function startDrawingCir(e) {
+﻿// конструктор
+var Circle = function () {
+    var circle = this;
+
+    circle.ElementSettings = {
+        lineUserLength: ko.observable(100),  // введено пользователем
+        lineLength: ko.observable(0),      // применяется
+        linewidth: ko.observable(1),
+        lineColor: ko.observable("#000000"),
+        dotsCount: ko.observable(10),
+        step: 5,
+        rotationAngle: ko.observable(0)
+    }
+
+    circle.AddButton = function (container) {
+        return $(container).append('<button type="button" class="btn btn-primary" data-toggle="circlePopover" title="Настройки окружности" onclick="GetEvent(circle)">Круг</button>');
+    }
+
+    circle.MakePopover = function () {
+        var tmp = $("#settingsPanel").clone();
+        tmp.attr("data-bind", "with: circle");
+        //$("#settingsPanel").attr("data-bind", "with: circle");
+        return $('[data-toggle="circlePopover"]').popover({
+            //Установление направления отображения popover
+            placement: 'bottom',
+            html: true,
+            trigger: "click",
+            content: tmp //$("#settingsPanel")
+        }).on("click", function () {
+            tmp.show();
+            //$("#settingsPanel").show();
+        });
+    }
+
+    circle.startDrawing = function (e) {
+       /* Settings.x = e.pageX - canvas.offsetLeft;
+        Settings.y = e.pageY - canvas.offsetTop;
+
+        this.changeLineLenghtToDots();
+
+
+        this.Rotation(this.inRad(Settings.rotationAngle()));
+
+        this.makeBaseLines(Settings.x, Settings.y, Settings.lineLength());
+        this.makeJoinLines(Settings.x, Settings.y, Settings.dotsCount(), Settings.lineLength());
+
+        this.Rotation(-this.inRad(Settings.rotationAngle()));*/
+        //console.log(Settings);  
+    }
+
+    circle.changeLineLenghtToDots = function () {
+        var length = parseInt(Settings.lineUserLength());
+        var dots = parseInt(Settings.dotsCount());
+
+        Settings.step = Math.round(length / dots);
+
+        var realLenght = Settings.step * dots
+        Settings.lineLength(realLenght);
+    }
+
+    circle.makeJoinLines = function (x, y, dotsCount, lenght) {
+        var centre, end = 0;
+        for (i = 0; i < dotsCount; i++) {
+            end = i * Settings.step;
+            centre = (i + 1) * Settings.step;
+
+            this.DrawLines(x, y + centre, x + lenght - end, y); // право - низ
+            this.DrawLines(x, y - centre, x + lenght - end, y); // право - верх
+            this.DrawLines(x, y + centre, x - lenght + end, y); // лево - низ
+            this.DrawLines(x, y - centre, x - lenght + end, y); // лево - верх
+        }
+    }
+
+    circle.makeBaseLines = function (x, y, length) {
+        this.DrawLines(x, y, x + length, y);
+        this.DrawLines(x, y, x - length, y);
+        this.DrawLines(x, y, x, y + length);
+        this.DrawLines(x, y, x, y - length);
+    }
+
+    return circle;
+}
+
+// задаём наследование
+Circle.prototype = Object.create(Shape.prototype);
+Circle.prototype.constructor = Circle;
+
+
+
+
+function startDrawingCir(e) {
     
     Settings.x = e.pageX - canvas.offsetLeft;
     Settings.y = e.pageY - canvas.offsetTop;
