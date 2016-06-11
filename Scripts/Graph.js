@@ -6,7 +6,8 @@
     linewidth: ko.observable(1),
     lineColor: ko.observable("#000000"),
     dotsCount: ko.observable(10),
-    step: 5
+    step: 5,
+    rotationAngle: ko.observable(0)
 }
 ko.applyBindings(Settings);
 
@@ -21,14 +22,31 @@ function changeLineLenghtToDots()
     Settings.lineLength(realLenght);
 }
 
+function inRad(angle)
+{
+    return angle * Math.PI / 180;
+}
+function Rotation(angle)
+{
+    context.translate(Settings.x, Settings.y); // сместили начало координат в точки клика
+    context.rotate(angle);                       // повернули все, относительно точки клика
+    context.translate(-Settings.x, -Settings.y); // вернули начало координат в левый верхний угол + учет поворота, т.е. она сместилась на угол
+}
+
 function startDrawing(e) {
     Settings.x = e.pageX - canvas.offsetLeft;
     Settings.y = e.pageY - canvas.offsetTop;
 
     changeLineLenghtToDots();
+
+
+    Rotation(inRad(Settings.rotationAngle()));
+
     makeBaseLines(Settings.x, Settings.y, Settings.lineLength());
-   // makeJoinLines(Settings.x, Settings.y, Settings.dotsCount(), Settings.lineLength());
-    //console.log(Settings);
+    makeJoinLines(Settings.x, Settings.y, Settings.dotsCount(), Settings.lineLength());
+
+    Rotation(-inRad(Settings.rotationAngle()));
+    //console.log(Settings);  
 }
 
 function makeJoinLines(x, y, dotsCount, lenght)
@@ -49,12 +67,15 @@ function makeJoinLines(x, y, dotsCount, lenght)
 function makeBaseLines(x, y, length) {
 
     DrawLines(x, y, x + length, y);
-   // DrawLines(x, y, x - length, y);
-   // DrawLines(x, y, x, y + length);
-   // DrawLines(x, y, x, y - length);
+    DrawLines(x, y, x - length, y);
+    DrawLines(x, y, x, y + length);
+    DrawLines(x, y, x, y - length);
 }
 
 function DrawLines(fromX, fromY, toX, toY) {
+
+  
+
     context.beginPath();
     context.lineWidth = parseInt(Settings.linewidth());
     context.strokeStyle = Settings.lineColor();
@@ -62,27 +83,24 @@ function DrawLines(fromX, fromY, toX, toY) {
     context.lineTo(toX, toY);
     context.stroke();
     context.closePath();
-    //var red = 90 * Math.PI / 180;
-    //context.translate(fromX, fromY);
-    //context.rotate(red);
 
-    var canvasWidth = canvas.width;
+  /*  var canvasWidth = canvas.width;
     var canvasHeight = canvas.height;
         // Clear the canvas
         context.clearRect(0, 0, canvasWidth, canvasHeight);
 
         // Move registration point to the center of the canvas
-        //context.translate(canvasWidth / 2, canvasWidth / 2);
+        context.translate(canvasWidth / 2, canvasWidth / 2);
 
         // Rotate 1 degree
-        //context.rotate(Math.PI / 180);
+        context.rotate(Math.PI / 180);
 
         // Move registration point back to the top left corner of canvas
-        //context.translate(-canvasWidth / 2, -canvasWidth / 2);
+        context.translate(-canvasWidth / 2, -canvasWidth / 2);
 
         context.fillStyle = "red";
         context.fillRect(canvasWidth / 4, canvasWidth / 4, canvasWidth / 2, canvasHeight / 4);
         context.fillStyle = "blue";
         context.fillRect(canvasWidth / 4, canvasWidth / 2, canvasWidth / 2, canvasHeight / 4);
-
+*/
 }
