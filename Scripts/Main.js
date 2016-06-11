@@ -53,3 +53,45 @@ function clearContext() {
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
+
+// конструктор
+/*function Animal ( name )
+{
+        this.name = name;
+        this.speed = 0;
+}
+Animal.prototype.stop =  function () {
+    this.speed = 0;
+    alert(this.name + ' стоит');
+};
+Animal.prototype.run = function (speed) {
+    this.speed += speed;
+    alert(this.name + ' бежит, скорость ' + this.speed);
+};
+
+function Rabbit(name) {
+    this.name = name;
+    this.speed = 0;
+}
+// задаём наследование
+Rabbit.prototype = Object.create(Animal.prototype);
+Rabbit.prototype.constructor = Rabbit;
+
+Rabbit.prototype.jump = function () {
+    this.speed++;
+    alert(this.name + ' прыгает');
+};
+Rabbit.prototype.stop = function () {
+    this.speed = -1;
+    alert(this.name + ' прыгает');
+};
+
+// Give the init function the jQuery prototype for later instantiation
+//Animal.__proto__ = Object.create(Animal.fn);
+
+var animal = new Animal('Зверь');
+var animal1 = new Rabbit('Rabbit');
+alert(animal.speed); // 0, свойство взято из прототипа
+animal.run(5); // Зверь бежит, скорость 5
+animal.run(5); // Зверь бежит, скорость 10
+animal.stop(); // Зверь стоит*/
