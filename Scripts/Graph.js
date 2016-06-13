@@ -3,7 +3,7 @@
 function changeLineLenghtToDots()
 {
     var length = parseInt(Settings.lineUserLength());
-    var dots = parseInt(Settings.dotsCount());
+    var dots = parseInt(Settings.linesCount());
 
     Settings.step = Math.round(length / dots);
 
@@ -32,16 +32,16 @@ function startDrawing(e) {
     Rotation(inRad(Settings.rotationAngle()));
 
     makeBaseLines(Settings.x, Settings.y, Settings.lineLength());
-    makeJoinLines(Settings.x, Settings.y, Settings.dotsCount(), Settings.lineLength());
+    makeJoinLines(Settings.x, Settings.y, Settings.linesCount(), Settings.lineLength());
 
     Rotation(-inRad(Settings.rotationAngle()));
     //console.log(Settings);  
 }
 
-function makeJoinLines(x, y, dotsCount, lenght)
+function makeJoinLines(x, y, linesCount, lenght)
 {
     var centre, end = 0;
-    for (i = 0; i < dotsCount; i++)
+    for (i = 0; i < linesCount; i++)
     {
         end = i * Settings.step;
         centre = (i + 1) * Settings.step;
