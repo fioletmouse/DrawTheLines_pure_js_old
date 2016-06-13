@@ -11,3 +11,4 @@ Canvas and slide panel with settings. You get pattern clicking on the canvas. Th
 There are some types of settings: lines count, colot, width, and rotation angle.
 Want to add angles and arces like elements and save function. Simple circle under the question. 
 No checks and validation, need to add these.
+
