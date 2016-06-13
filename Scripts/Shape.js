@@ -13,10 +13,10 @@ Shape.prototype.Rotation = function (angle) {
     context.translate(-Settings.x, -Settings.y); // вернули начало координат в левый верхний угол + учет поворота, т.е. она сместилась на угол
 };
 
-Shape.prototype.DrawLines = function (fromX, fromY, toX, toY) {
+Shape.prototype.DrawLines = function (fromX, fromY, toX, toY, lineWidth, lineColor) {
     context.beginPath();
-    context.lineWidth = parseInt(Settings.linewidth());
-    context.strokeStyle = Settings.lineColor();
+    context.lineWidth = lineWidth;
+    context.strokeStyle = lineColor;
     context.moveTo(fromX, fromY);
     context.lineTo(toX, toY);
     context.stroke();

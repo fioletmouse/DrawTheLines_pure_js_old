@@ -1,0 +1,34 @@
+﻿<script type="text/html" id="person-template">
+    <div id="settingsPanel">
+        <div class="settingsRow">
+            <label for="length" >Длина луча:</label>
+            <input id="length" data-bind="value: lineUserLength"/>
+            <span>px</span>      
+        </div>
+        <div class="settingsRow">
+            <span>Реальная длина луча:</span>
+            <span data-bind="text: lineLength"></span>
+            <span>px</span>
+        </div>
+        <div class="settingsRow"> 
+            <label for="dotsCount" >Точек на луч:</label>
+            <input id="dotsCount" data-bind="value: dotsCount" />
+            <span>шт</span>
+        </div>
+        <div class="settingsRow"> 
+            <label for="rotationAngle">Угол поворота:</label>
+            <input id="rotationAngle" data-bind="value: rotationAngle" />
+            <span>°</span>
+        </div>
+        <div class="settingsRow"> 
+            <label for="linewidth">Толщина линий:</label>
+            <input type="text" id="linewidth"  data-bind="value: linewidth" />
+            <span>px</span>
+        </div>
+        <div class="settingsRow"> 
+            <label for="color">Цвет линий:</label>
+            <input type="text" id="color" name="color" style="width:40%" data-bind="value: lineColor"/>
+        </div>
+        <div id="colorCircle"></div>
+    </div>
+</script>

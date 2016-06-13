@@ -1,18 +1,12 @@
 ﻿var canvas;
 var context;
-var star;
-var circle;
+//var star;
+//var circle;
+var arr = [];
 
 var Settings = {
     x: 0,
-    y: 0/*,
-    lineUserLength: ko.observable(100),  // введено пользователем
-    lineLength: ko.observable(0),      // применяется
-    linewidth: ko.observable(1),
-    lineColor: ko.observable("#000000"),
-    dotsCount: ko.observable(10),
-    step: 5,
-    rotationAngle: ko.observable(0)*/
+    y: 0
 }
 
 window.onload = function () {
@@ -24,32 +18,53 @@ window.onload = function () {
     redraw();
 
     // Подключаем требуемые для рисования события
-    //canvas.onclick = startDrawing;
-    canvas.oncontextmenu = startDrawingCir;
+    canvas.onclick = StartEvent;
 }
 
-function GetEvent(item)
+function StartEvent(e)
 {
-    canvas.onclick = item.startDrawing.bind(item);
+    if($('#collapse-group div[aria-expanded=true]')[0] != null)
+    {
+        arr.forEach(function(item, i, arr) {
+            if (item.title == $('#collapse-group div[aria-expanded=true]').attr("id"))
+            {
+                item.startDrawing(e);
+            }
+        })
+    }
 }
 
 $(document).ready(function () {
 
-
-    star = new Stars();
-    star.AddButton("#Settings");
-    star.MakePopover();
+    var star = new Stars()
+    arr.push(star);
+    star.AddButton("#collapse-group");
     Settings.star = star.ElementSettings;
 
-    circle = new Circle();
-    circle.AddButton("#Settings");
-    circle.MakePopover();
+    var circle = new Circle();
+    arr.push(circle);
+    circle.AddButton("#collapse-group");
     Settings.circle = circle.ElementSettings;
 
     ko.applyBindings(Settings);
 
+
+    $('#opener').on('click', function () {
+        var panel = $('#slide-panel');
+        if (panel.hasClass("visible")) {
+            panel.removeClass('visible').animate({ 'margin-left': '-250px' });
+        } else {
+            panel.addClass('visible').animate({ 'margin-left': '0px' });
+        }
+        return false;
+    });
+
+    $('#colorpicker').farbtastic(function (color) {
+        $("#cnv").css("background-color", color);
+    });
+
     // Цвет фона
-    $('[data-toggle="colorPopover"]').popover({
+    /*$('[data-toggle="colorPopover"]').popover({
             title: "Colorpicker <i class='icon-remove pull-right'></i>",
             trigger: "click",
             placement: "bottom",
@@ -61,10 +76,10 @@ $(document).ready(function () {
             $target.farbtastic(function (color) {
                 $("#cnv").css("background-color", color);
             });
-        });
+        });*/
 
     // Настройки элемента
-    $('[data-toggle="settingsPopover"]').popover({
+  /*  $('[data-toggle="settingsPopover"]').popover({
         //Установление направления отображения popover
         placement: 'bottom',
         html: true,
@@ -72,14 +87,14 @@ $(document).ready(function () {
         content: $("#settingsPanel")
     }).on("click", function () {
         $("#settingsPanel").show();
-    });
+    });*/
 
     $('#colorCircle').farbtastic(function (color) {
         $("#color").val(color).css("background-color", color);
         $("#color").change();
     });
 
-    $('[data-toggle="circlePopover"]').popover({
+   /* $('[data-toggle="circlePopover"]').popover({
         //Установление направления отображения popover
         placement: 'bottom',
         html: true,
@@ -87,12 +102,12 @@ $(document).ready(function () {
         content: $("#settingsPanel")
     }).on("click", function () {
         $("#settingsPanel").show();
-    });
+    });*/
 });
 
 function redraw() {
-    canvas.width = 600;// window.innerWidth;
-    canvas.height = 600; //window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 }
 function clearContext() {
     context.setTransform(1, 0, 0, 1, 0, 0);

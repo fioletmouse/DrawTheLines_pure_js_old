@@ -1,6 +1,7 @@
 ﻿// конструктор
 var Stars = function () {
     var st = this;
+    this.title = "star" 
 
     st.ElementSettings = {
         lineUserLength: ko.observable(500),  // введено пользователем
@@ -12,56 +13,51 @@ var Stars = function () {
         rotationAngle: ko.observable(0)
     }
     st.AddButton = function (container) {
-        return $(container).append('<button type="button" class="btn btn-primary" data-toggle="starPopover" title="Настройки звезды" onclick="GetEvent(star)">Звезда</button>');
-    }
-    st.MakePopover = function ()
-    {
-        var tmp = $("#settingsPanel").clone();
-        tmp.attr("data-bind", "with: star");
-        return $('[data-toggle="starPopover"]').popover({
-            //Установление направления отображения popover
-            placement: 'bottom',
-            html: true,
-            trigger: "click",
-            content: tmp // $("#settingsPanel")
-        }).on("click", function () {
+        var html = '<div class="panel panel-default">' +
+                        '<div class="panel-heading">' +
+                            '<h4 class="panel-title">' +
+                                '<a data-toggle="collapse" data-parent="#collapse-group" href="#star">Звезда</a>' +
+                            '</h4>' +
+                        '</div>' +
+                       ' <div id="star" class="panel-collapse collapse">' +
+                            '<div class="panel-body">' +
+                                '<div data-bind="template: { name: \'SettingsTemplate\', data: star }"></div>' +
+                            '</div></div></div>'
+        return $(container).append(html);
 
-            //$("#settingsPanel").show();
-            tmp.show();
-        });
     }
+
    st.startDrawing = function (e) {
         Settings.x = e.pageX - canvas.offsetLeft;
         Settings.y = e.pageY - canvas.offsetTop;
         
-        console.log(Settings.star.lineUserLength());
         this.changeLineLenghtToDots();
 
 
-        this.Rotation(this.inRad(Settings.rotationAngle()));
+        this.Rotation(this.inRad(Settings.star.rotationAngle()));
 
-        this.makeBaseLines(Settings.x, Settings.y, Settings.lineLength());
-        this.makeJoinLines(Settings.x, Settings.y, Settings.dotsCount(), Settings.lineLength());
+        this.makeBaseLines(Settings.x, Settings.y, Settings.star.lineLength());
+        this.makeJoinLines(Settings.x, Settings.y, Settings.star.dotsCount(), Settings.star.lineLength());
 
-        this.Rotation(-this.inRad(Settings.rotationAngle()));
+        this.Rotation(-this.inRad(Settings.star.rotationAngle()));
         //console.log(Settings);  
     }
 
    st.changeLineLenghtToDots = function () {
-       var length = parseInt(Settings.lineUserLength());
-       var dots = parseInt(Settings.dotsCount());
+       var length = parseInt(Settings.star.lineUserLength());
+       var dots = parseInt(Settings.star.dotsCount());
 
-       Settings.step = Math.round(length / dots);
+       Settings.star.step = Math.round(length / dots);
 
-       var realLenght = Settings.step * dots
-       Settings.lineLength(realLenght);
+       var realLenght = Settings.star.step * dots
+       Settings.star.lineLength(realLenght);
    }
    st.makeJoinLines = function (x, y, dotsCount, lenght) {
        var centre, end = 0;
        for (i = 0; i < dotsCount; i++) {
-           end = i * Settings.step;
-           centre = (i + 1) * Settings.step;
-
+           end = i * Settings.star.step;
+           centre = (i + 1) * Settings.star.step;
+            
            this.DrawLines(x, y + centre, x + lenght - end, y); // право - низ
            this.DrawLines(x, y - centre, x + lenght - end, y); // право - верх
            this.DrawLines(x, y + centre, x - lenght + end, y); // лево - низ
@@ -82,4 +78,10 @@ var Stars = function () {
 Stars.prototype = Object.create(Shape.prototype);
 Stars.prototype.constructor = Stars;
 
+Stars.prototype.DrawLines = function (fromX, fromY, toX, toY)
+{
+    var lineWidth =  parseInt(Settings.star.linewidth());
+    var lineColor = Settings.star.lineColor();
+    Shape.prototype.DrawLines.apply(this, [fromX, fromY, toX, toY, lineWidth, lineColor]);
+}
 

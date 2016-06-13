@@ -11,7 +11,8 @@
     <link type="text/css" href="CSS/bs/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    <div id="settingsPanel" style="display:none">
+<script type="text/html" id="SettingsTemplate">
+    <div id="settingsPanel">
         <div class="settingsRow">
             <label for="length" >Длина луча:</label>
             <input id="length" data-bind="value: lineUserLength"/>
@@ -43,25 +44,54 @@
         </div>
         <div id="colorCircle"></div>
     </div>
+</script>
 
     <div id="MainContainer">
-        <div id="Settings" >
-            <button type="button" class="btn btn-primary" data-toggle="colorPopover" title="Выберите цвет фона">Фон</button>
-            <button type="button" class="btn btn-primary" data-toggle="settingsPopover" title="Настройки элементов">Элементы</button>
-            <button type="button" class="btn btn-primary" data-toggle="circlePopover" title="Настройки круга">Круг</button>
-            <button type="button" class="btn btn-primary" onclick="clearContext()">Очистить</button>
+        <!--выезжающая панель-->
+        <div id="slide-panel">
+            <a href="#" class="btn btn-danger" id="opener"><i class="glyphicon glyphicon-align-justify"></i></a>
+
+            <!--внутренняя часть панели-->
+            <div class="panel-group" id="collapse-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#collapse-group" href="#el1">Фон</a>
+                            </h4>
+                        </div>
+                        <div id="el1" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div id='colorpicker'>
+                                <div class='color-picker'></div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#collapse-group" href="#el4">Дополнительно</a>
+                            </h4>
+                        </div>
+                        <div id="el4" class="panel-collapse collapse">
+                            <div class="panel-body">
+                              <button type="button" class="btn btn-primary" onclick="clearContext()">Очистить</button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
         </div>
 
         <canvas id="cnv"></canvas>
     </div>
 </body>
-<script type="text/javascript" src="Scripts/libs/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="Scripts/libs/bootstrap.min.js"></script>
-<script type="text/javascript" src="Scripts/libs/knockout-2.1.0.js"></script>
-<script type="text/javascript" src="Scripts/libs/farbtastic.js"></script>
-<script type="text/javascript" src="Scripts/Main.js"></script>
+    <script type="text/javascript" src="Scripts/libs/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="Scripts/libs/jquery.tmpl.js"></script>
+    <script type="text/javascript" src="Scripts/libs/bootstrap.min.js"></script>
+    <script type="text/javascript" src="Scripts/libs/knockout-2.1.0.js"></script>
+    <script type="text/javascript" src="Scripts/libs/farbtastic.js"></script>
+    <script type="text/javascript" src="Scripts/Main.js"></script>
     <script type="text/javascript" src="Scripts/Shape.js"></script>
     <script type="text/javascript" src="Scripts/Stars.js"></script>
-<!--<script type="text/javascript" src="Scripts/Graph.js"></script>-->
-<script type="text/javascript" src="Scripts/Circle.js"></script>
+    <script type="text/javascript" src="Scripts/Circle.js"></script>
 </html>

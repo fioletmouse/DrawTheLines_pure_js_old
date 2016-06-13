@@ -1,6 +1,7 @@
 ﻿// конструктор
 var Circle = function () {
     var circle = this;
+    this.title = "circle";
 
     circle.ElementSettings = {
         lineUserLength: ko.observable(100),  // введено пользователем
@@ -13,7 +14,17 @@ var Circle = function () {
     }
 
     circle.AddButton = function (container) {
-        return $(container).append('<button type="button" class="btn btn-primary" data-toggle="circlePopover" title="Настройки окружности" onclick="GetEvent(circle)">Круг</button>');
+        var html = '<div class="panel panel-default">' +
+                        '<div class="panel-heading">' +
+                            '<h4 class="panel-title">' +
+                                '<a data-toggle="collapse" data-parent="#collapse-group" href="#el3">Круг</a>' +
+                            '</h4>' +
+                        '</div>' +
+                       ' <div id="el3" class="panel-collapse collapse">' +
+                            '<div class="panel-body">' +
+                                '<div data-bind="template: { name: \'SettingsTemplate\', data: circle }"></div>' +
+                            '</div></div></div>'
+        return $(container).append(html);
     }
 
     circle.MakePopover = function () {
