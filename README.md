@@ -1,6 +1,8 @@
 # Graph
 Little js project
-
++ html
++ pure js
++ css
 + jquery 
 + bootstrap
 + knockout
