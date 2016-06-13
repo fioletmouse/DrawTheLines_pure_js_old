@@ -24,8 +24,8 @@
             <span>px</span>
         </div>
         <div class="settingsRow"> 
-            <label for="dotsCount" >Точек на луч:</label>
-            <input id="dotsCount" data-bind="value: dotsCount" />
+            <label for="linesCount" >Количество линий:</label>
+            <input id="linesCount" data-bind="value: linesCount" />
             <span>шт</span>
         </div>
         <div class="settingsRow"> 
@@ -46,10 +46,40 @@
     </div>
 </script>
 
+<script type="text/html" id="CircleSettingsTemplate">
+    <div id="settingsCirclePanel">
+        <div class="settingsRow">
+            <label for="length" >Радиус:</label>
+            <input id="radiusLength" data-bind="value: radiusLength"/>
+            <span>px</span>      
+        </div>
+        <div class="settingsRow"> 
+            <label for="dotsCircleCount" >Линий на круг:</label>
+            <input id="dotsCircleCount" data-bind="value: linesCount" />
+            <span>шт</span>
+        </div>
+        <div class="settingsRow">
+            <span>Фактически линий:</span>
+            <span data-bind="text: linesRealCount"></span>
+            <span>шт</span>
+        </div>
+        <div class="settingsRow"> 
+            <label for="lineCireclewidth">Толщина линий:</label>
+            <input type="text" id="lineCireclewidth"  data-bind="value: linewidth" />
+            <span>px</span>
+        </div>
+        <div class="settingsRow"> 
+            <label for="colorCirecle">Цвет линий:</label>
+            <input type="text" id="colorCirecle" name="color" style="width:40%" data-bind="value: lineColor"/>
+        </div>
+        <div id="colorCircleForCircle"></div>
+    </div>
+</script>
+
     <div id="MainContainer">
         <!--выезжающая панель-->
         <div id="slide-panel">
-            <a href="#" class="btn btn-danger" id="opener"><i class="glyphicon glyphicon-align-justify"></i></a>
+            <a href="#" class="btn btn-danger" id="opener"><i class="glyphicon glyphicon-arrow-left"></i></a>
 
             <!--внутренняя часть панели-->
             <div class="panel-group" id="collapse-group">

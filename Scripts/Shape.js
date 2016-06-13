@@ -22,3 +22,12 @@ Shape.prototype.DrawLines = function (fromX, fromY, toX, toY, lineWidth, lineCol
     context.stroke();
     context.closePath();
 };
+
+Shape.prototype.DrawCircle = function (fromX, fromY, radius, lineWidth, lineColor) {
+    context.beginPath();
+    context.lineWidth = lineWidth;
+    context.strokeStyle = lineColor;
+    context.arc(fromX, fromY, radius, 0, Math.PI * 2, false);
+    context.stroke();
+    context.closePath();
+};
