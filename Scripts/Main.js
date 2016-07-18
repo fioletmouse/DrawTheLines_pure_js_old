@@ -1,9 +1,9 @@
 ﻿var canvas;
 var context;
-//var star;
-//var circle;
+
 var arr = [];
 
+/*обект для хранения данных для нокаута*/
 var Settings = {
     x: 0,
     y: 0
@@ -39,12 +39,12 @@ function StartEvent(e)
 $(document).ready(function () {
 
     /*незаконченный вариант инициализация объектов. !!! Переделать!*/
-    var star = new Stars()
+    var star = new Stars("star", "Звезда")
     arr.push(star);
     star.AddButton("#collapse-group");
     Settings.star = star.ElementSettings;
 
-    var circle = new Circle();
+    var circle = new Circle('circle', 'Круг');
     arr.push(circle);
     circle.AddButton("#collapse-group");
     Settings.circle = circle.ElementSettings;
@@ -67,18 +67,21 @@ $(document).ready(function () {
         $("#cnv").css("background-color", color);
     });
 
+    // цветовой круг для цвезды
     $("#colorCircle").farbtastic(function (color) {
         $("#color").val(color).css("background-color", color);
         $("#color").change();
     });
 
+    /* цветовой круг для круга */
     $("#colorCircleForCircle").farbtastic(function (color) {
-        $("#colorCirecle").val(color).css("background-color", color);
-        $("#colorCirecle").change();
+        $("#colorCirclePicker").val(color).css("background-color", color);
+        $("#colorCirclePicker").change();
     })
 });
 
-$(function () {
+// не помню зачем
+/*$(function () {
     $("collapse-group #settingsPanel").each(function (i, elem) {
         var inpt = $(elem).find("#color");
         $(elem).find("#colorCircle").farbtastic(function (color) {
@@ -86,12 +89,36 @@ $(function () {
             inpt.change();
         })
     })
-})
+})*/
+
+// установка размера рабочей области
 function redraw() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    setDefaultColor();
 }
+
+// очистка рабочей области и сброс всех трансформов
 function clearContext() {
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, canvas.width, canvas.height);
+    setDefaultColor();    
+}
+
+// задаем начальный цвет фона
+function setDefaultColor() {
+    $("#cnv").css("background-color", "black");
+}
+
+function saveImage() {
+    // Находим элемент <img>
+  /*  var imageCopy = document.getElementById("savedImageCopy");
+
+    // Отображаем данные холста в элементе <img>
+    imageCopy.src = canvas.toDataURL();
+
+    // Показываем элемент <div>, делая изображение видимым
+    // делая изображение видимым
+    var imageContainer = document.getElementById("savedCopyContainer");
+    imageContainer.style.display = "block";*/
 }

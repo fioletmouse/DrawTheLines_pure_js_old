@@ -1,7 +1,10 @@
 ﻿// конструктор
-var Stars = function () {
+var Stars = function (title, name) {
     var _inst = this;
-    _inst.title = "star"
+
+    // изменить инициализацию, сделать 1 методом
+    _inst.title = title;
+    _inst.name = name;
 
     _inst.ElementSettings = {
         lineUserLength: ko.observable(30),  // введено пользователем
@@ -13,20 +16,8 @@ var Stars = function () {
         rotationAngle: ko.observable(0)
     }
 
-    /*изменить этот ужас*/
     _inst.AddButton = function (container) {
-        var html = '<div class="panel panel-default">' +
-                        '<div class="panel-heading">' +
-                            '<h4 class="panel-title">' +
-                                '<a data-toggle="collapse" data-parent="#collapse-group" href="#star">Звезда</a>' +
-                            '</h4>' +
-                        '</div>' +
-                       ' <div id="star" class="panel-collapse collapse">' +
-                            '<div class="panel-body">' +
-                                '<div data-bind="template: { name: \'SettingsTemplate\', data: star }"></div>' +
-                            '</div></div></div>'
-        return $(container).append(html);
-
+        this.AddContainer(container, _inst.title, _inst.name, 'SettingsTemplate');
     }
 
     _inst.startDrawing = function (e) {

@@ -1,7 +1,8 @@
 ﻿// конструктор
-var Circle = function () {
+var Circle = function (title, name) {
     var _inst = this;
-    _inst.title = "circle";
+    _inst.title = title;
+    _inst.name = name;
 
     _inst.ElementSettings = {
         radiusLength: ko.observable(100),  
@@ -13,17 +14,7 @@ var Circle = function () {
     }
 
     _inst.AddButton = function (container) {
-        var html = '<div class="panel panel-default">' +
-                        '<div class="panel-heading">' +
-                            '<h4 class="panel-title">' +
-                                '<a data-toggle="collapse" data-parent="#collapse-group" href="#circle">Круг</a>' +
-                            '</h4>' +
-                        '</div>' +
-                       ' <div id="circle" class="panel-collapse collapse">' +
-                            '<div class="panel-body">' +
-                                '<div data-bind="template: { name: \'CircleSettingsTemplate\', data: circle }"></div>' +
-                            '</div></div></div>'
-        return $(container).append(html);
+        this.AddContainer(container, _inst.title, _inst.name, 'CircleSettingsTemplate');
     }
 
     _inst.startDrawing = function (e) {
